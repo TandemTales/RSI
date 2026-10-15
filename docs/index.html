@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101919">
+  <title>RSI — Recursive Self-Improvement</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="./" aria-label="RSI home"><span class="mark">↻</span> RSI<span class="edition">LAB / 001</span></a><div class="header-note">RECURSIVE SELF-IMPROVEMENT <span>LOCAL PROTOTYPE</span></div></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">A FACTORY THAT BUILDS ITS OWN WORKFORCE</p><h1>One robot.<br><span>Then a few more.</span></h1><p class="lede">Write a route. Deliver parts. Build a robot that runs your code.<br>The factory grows. The traffic gets interesting.</p></div><div class="mission"><span class="eyebrow">EXPERIMENT 01</span><h2>Close the loop</h2><p>Bring three robots online. Your second robot should help build the third.</p><div id="milestones" class="milestones"></div><span id="goal-status">Ready when you are.</span></div></section>
+    <section class="workbench" aria-label="Factory workbench">
+      <div class="factory-column">
+        <div class="toolbar"><div class="transport"><button id="run" class="primary">▶ Run</button><button id="step">Step →</button><button id="reset" class="quiet">↺ Reset</button></div><label class="speed">Speed <select id="speed"><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option><option value="8">8×</option></select></label><span id="clock" class="mono">T 0000</span></div>
+        <div class="floor-wrap"><div class="floor-label"><span><i id="mode-dot"></i> <b id="mode">PAUSED</b></span><span>FLOOR 01 / ASSEMBLY LAB</span></div><canvas id="floor" width="900" height="660" aria-label="Top-down factory grid. Select robots using the roster below."></canvas><div class="floor-footer"><span><i class="legend mint"></i> ROBOT <i class="legend gold"></i> PART <i class="legend red"></i> BLOCKED</span><span>CLICK A ROBOT TO INSPECT</span></div></div>
+        <div class="resources" aria-label="Resource accounting"><div><span>PARTS BIN</span><b id="bin">18</b></div><div><span>IN TRANSIT</span><b id="carried">0</b></div><div><span>ASSEMBLER</span><b id="buffer">0 / 3</b></div><div><span>CONSTRUCTION</span><b id="construction">Idle</b><progress id="build-progress" max="6" value="0" aria-label="Construction progress"></progress></div></div>
+        <div class="section-bar"><h2>Workforce <span id="robot-count">01</span></h2><span class="subtle">SELECT TO DEBUG</span></div><div id="roster" class="roster"></div>
+        <div class="section-bar"><h2>Factory log</h2><span id="balance" class="subtle"></span></div><ol id="events" class="events" aria-label="Recent factory events"></ol>
+      </div>
+      <aside class="code-panel">
+        <div class="panel-heading"><span class="eyebrow">01 / PROGRAMMING</span><h2>The instruction tape</h2><p>Robots execute one action per tick. Movement continues until the waypoint is reached.</p></div>
+        <div class="program-field"><label for="template">Edit program</label><select id="template"><option value="courier">Courier</option><option value="express">Express</option><option value="custom">Your experiment</option></select><span id="revision" class="tag">v1</span></div>
+        <label class="sr-only" for="editor">Program instructions</label><div class="editor-shell"><div class="code-caption"><span>ROUTE.TAPE</span><span id="draft-status">SAVED</span></div><textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax"></textarea></div>
+        <p id="editor-message" class="editor-message" aria-live="polite">A clockwise loop keeps the loading dock clear.</p>
+        <div class="editor-actions"><button id="save">Save revision</button><button id="deploy" class="accent">Deploy to R01</button></div>
+        <div class="inheritance"><label for="child-program">NEW ROBOTS WILL RUN</label><select id="child-program"><option value="courier">Courier</option><option value="express">Express</option><option value="custom">Your experiment</option></select><p id="inherit-note">Captured when construction starts. Existing robots keep their own copy.</p></div>
+        <div class="debug"><div class="section-bar"><h2 id="debug-title">R01 / LIVE DEBUG</h2><span id="debug-version" class="tag">v1</span></div><p id="debug-status"></p><div id="tape" class="tape"></div><div id="debug-data" class="debug-data"></div></div>
+        <details id="syntax"><summary>Instruction reference</summary><dl><dt>move x y</dt><dd>Walk to a tile, horizontal first. Walls and robots block movement. Coordinates start at (0, 0) in the upper left.</dd><dt>pick N|E|S|W</dt><dd>Take one adjacent part. One part fits in each robot.</dd><dt>drop N|E|S|W</dt><dd>Deliver to the assembler, return to the bin, or leave a part on the floor.</dd><dt>activate N|E|S|W</dt><dd>Spend 3 buffered parts to build a robot in 6 ticks. A busy or under-supplied machine lets the route continue.</dd><dt>repeat</dt><dd>Restart from line 1. Required as the last command. All other failed actions wait and retry.</dd></dl></details>
+      </aside>
+    </section>
+    <section class="lab-note"><div><span class="eyebrow">02 / BREAK SOMETHING</span><h2>More robots. Same floor.</h2><p>Two robots cannot share a tile or swap places. Opposing routes can deadlock. Try the jam, inspect the blocked line, then route one robot around the other.</p></div><button id="jam">Load traffic jam ↗</button><button id="factory" class="quiet">Return to factory</button></section>
+    <footer><span>RSI / A PROGRAMMABLE SYSTEMS EXPERIMENT</span><span>18 PARTS. ONE FLOOR. NO MAGIC RESOURCES.</span></footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -5,7 +5,8 @@ import assert from 'node:assert/strict';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PACKAGE || 'C:/Python312/Lib/site-packages/playwright/driver/package');
 const url = process.env.RSI_URL || 'http://127.0.0.1:4174';
-await mkdir('.preview', { recursive: true });
+const evidence = process.env.RSI_EVIDENCE_DIR || '.preview';
+await mkdir(evidence, { recursive: true });
 const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROMIUM_PATH || 'C:/Users/jshun/AppData/Local/ms-playwright/chromium-1155/chrome-win/chrome.exe', timeout: 20000 });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1100 }, reducedMotion: 'reduce' });
 const errors = [], failedRequests = [], checks = [];
@@ -20,7 +21,7 @@ try {
   assert.equal(await page.title(), 'RSI — Recursive Self-Improvement');
   assert.equal((await snapshot()).robots.length, 1);
   assert.equal(await page.locator('#mode').innerText(), 'PAUSED');
-  await page.screenshot({ path: '.preview/desktop-initial.png', fullPage: true });
+  await page.screenshot({ path: `${evidence}/desktop-initial.png`, fullPage: true });
   check('initial paused game renders');
   await page.locator('#speed').selectOption('8');
   await page.locator('#run').click();
@@ -44,7 +45,7 @@ try {
   await page.locator('[data-robot="2"]').click();
   assert.match(await page.locator('#debug-title').innerText(), /R02/);
   assert.match(await page.locator('#balance').innerText(), /18 \/ 18/);
-  await page.screenshot({ path: '.preview/desktop-three-robots.png', fullPage: true });
+  await page.screenshot({ path: `${evidence}/desktop-three-robots.png`, fullPage: true });
   check('default UI route builds R02 and R03 with R02 helping; selection/debug update');
   await page.locator('#reset').click();
   await page.locator('#child-program').selectOption('express');
@@ -65,7 +66,7 @@ try {
   await page.locator('#step').click();
   assert.ok((await snapshot()).robots.every(r=>r.blocked));
   assert.match(await page.locator('#debug-status').innerText(),/Traffic/);
-  await page.screenshot({ path: '.preview/desktop-jam.png', fullPage: true });
+  await page.screenshot({ path: `${evidence}/desktop-jam.png`, fullPage: true });
   await page.locator('#template').selectOption('custom');
   await page.locator('#editor').fill('move 6 5\nmove 9 5\nrepeat');
   await page.locator('#deploy').click();
@@ -81,11 +82,11 @@ try {
     await page.setViewportSize({width,height});
     await page.evaluate(()=>scrollTo(0,0));
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`no overflow at ${width}`);
-    await page.screenshot({path:`.preview/viewport-${width}x${height}.png`,fullPage:true});
+    await page.screenshot({path:`${evidence}/viewport-${width}x${height}.png`,fullPage:true});
     await page.locator('#step').click();
   }
   check('390px, 320px and landscape layouts have no horizontal overflow; controls work');
   assert.deepEqual(errors,[]);assert.deepEqual(failedRequests,[]);
   check('no browser JavaScript errors or HTTP failures');
-  await writeFile('.preview/browser-report.json',JSON.stringify({url,browser:browser.version(),checks,errors,failedRequests},null,2));
+  await writeFile(`${evidence}/browser-report.json`,JSON.stringify({url,browser:browser.version(),checks,errors,failedRequests},null,2));
 } finally { await browser.close(); }

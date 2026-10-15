@@ -79,9 +79,9 @@ Optional `node tests/browser-smoke.mjs` uses an **already installed** Playwright
 
 ## Static hosting readiness
 
-The game files use relative URLs and work under a GitHub Pages repository path. To publish a static bundle, use only `index.html`, `style.css`, `app.js`, `sim.js`, `icon.svg` and `.nojekyll`. `server.mjs` is only a local preview helper. No hosting or deployment workflow is enabled.
+The game files use relative URLs and work under a GitHub Pages repository path. `npm run build` copies only `index.html`, `style.css`, `app.js`, `sim.js`, `icon.svg` and `.nojekyll` into `docs/`, the Pages publication folder. Tests, QA notes and preview tools stay outside that public bundle. `server.mjs` is only a local preview helper. No Actions workflow or paid service is needed.
 
-Remote repository creation was rejected by automatic approval review in this session. No GitHub repository was created, no commit was pushed, and no site was published. Source remains local; no repository visibility or paid plan was changed.
+The source repository is [private TandemTales/RSI](https://github.com/TandemTales/RSI). Initial remote attempts were blocked; the later authenticated chat confirmation was accepted for creation. Publication status and verification are recorded in [QA.md](QA.md). Repository visibility and paid plan must remain unchanged.
 
 ## Prototype boundaries
 
