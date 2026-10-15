@@ -83,6 +83,8 @@ The game files use relative URLs and work under a GitHub Pages repository path. 
 
 The source repository is [private TandemTales/RSI](https://github.com/TandemTales/RSI). Initial remote attempts were blocked; the later authenticated chat confirmation was accepted for creation. Publication status and verification are recorded in [QA.md](QA.md). Repository visibility and paid plan must remain unchanged.
 
+**Public hosting is blocked by the existing plan.** GitHub rejected Pages creation with HTTP 422: “Your current plan does not support GitHub Pages for this repository.” No site was published, no plan purchased, and source visibility remains private. The prepared `docs/` bundle is playable locally at `http://127.0.0.1:4173/docs/` while the preview server runs (or substitute your chosen port).
+
 ## Prototype boundaries
 
 One fixed floor, one parts bin and one assembler. The factory fabricates additional robots; it does not expand its building footprint. Program improvements are written by the player, not invented autonomously. There is no mining, tech tree, server, Godot, automatic pathfinding, audio or save-game system. Programs and state live in the current tab and reset on refresh. Deliberately bad routes can block forever; use the debugger and deploy a correction or Reset. Browser screenshots and scripted interactions are not human playtesting or real-device performance evidence.

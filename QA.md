@@ -54,4 +54,15 @@ The provided browser-control tool failed before initialization: `failed to prepa
 
 Read-only GitHub checks verified authenticated account `shoejunk`, **active admin** membership in `TandemTales`, and no repository resolvable as `TandemTales/RSI`. Initial repository-creation attempts were rejected because later relay approvals were not accepted. After the parent verified the authenticated chat response “Confirm both publications” to the explicit private-repository/public-Pages question, the single requested retry succeeded. `https://github.com/TandemTales/RSI` was created private. No alternate route was used after a rejection.
 
-The Pages bundle is generated into `docs/` using an explicit six-file allowlist. No tests, QA notes, preview helpers or dependencies are included. Remote commit and deployment verification follow below when confirmed.
+The Pages bundle is generated into `docs/` using an explicit six-file allowlist. No tests, QA notes, preview helpers or dependencies are included.
+
+## Private push and Pages attempt
+
+- Confirmed new repository `TandemTales/RSI`, `isPrivate: true`, viewer permission `ADMIN`.
+- Pushed `main` successfully. GitHub's commit API returned `aff13d4008a252b97338e7bc4d08c32409ee14e6`, identical to local HEAD for the prototype plus static bundle. Final documentation updates are verified by comparing local HEAD and the remote commit API again after their push.
+- Organization API reports existing plan `free`.
+- Requested Pages creation from branch `main`, folder `/docs`, without changing source visibility or plan.
+- GitHub returned **HTTP 422**, exact message: **“Your current plan does not support GitHub Pages for this repository.”** No deployment occurred and there is no verified public playable URL. No purchase, visibility change, credential creation or authorization expansion was attempted.
+- A bundle browser check initially hit `ERR_CONNECTION_REFUSED` because the old preview process had stopped. Restarted the local-only preview and added directory-index support for `/docs/` to the development server before retrying. This change affects the local preview helper only.
+- The exact `docs/` bundle then passed all **8 browser scenarios** at `http://127.0.0.1:4174/docs/`, including construction through three robots, editing, inheritance, jam resolution and responsive controls. Evidence is in `.preview/pages-bundle/`; the report lists no page errors or HTTP failures. SHA256 comparison confirms all six bundle files match their reviewed root sources.
+- A follow-up `GET /repos/TandemTales/RSI/pages` returned **404 Not Found**, confirming there is no Pages site to report as deployed.
