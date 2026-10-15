@@ -81,9 +81,9 @@ Optional `node tests/browser-smoke.mjs` uses an **already installed** Playwright
 
 The game files use relative URLs and work under a GitHub Pages repository path. `npm run build` copies only `index.html`, `style.css`, `app.js`, `sim.js`, `icon.svg` and `.nojekyll` into `docs/`, the Pages publication folder. Tests, QA notes and preview tools stay outside that public bundle. `server.mjs` is only a local preview helper. No Actions workflow or paid service is needed.
 
-The source repository is [private TandemTales/RSI](https://github.com/TandemTales/RSI). Initial remote attempts were blocked; the later authenticated chat confirmation was accepted for creation. Publication status and verification are recorded in [QA.md](QA.md). Repository visibility and paid plan must remain unchanged.
+The source repository is [public TandemTales/RSI](https://github.com/TandemTales/RSI). The game is published through [GitHub Pages](https://tandemtales.github.io/RSI/) from `main` → `/docs`. Public source visibility was explicitly authorized after the private-repository plan blocked Pages. The tracked files and complete Git history were reviewed before that visibility change. No paid plan, separate repository or new credential was needed. Verification evidence is recorded in [QA.md](QA.md).
 
-**Public hosting is blocked by the existing plan.** GitHub rejected Pages creation with HTTP 422: “Your current plan does not support GitHub Pages for this repository.” No site was published, no plan purchased, and source visibility remains private. The prepared `docs/` bundle is playable locally at `http://127.0.0.1:4173/docs/` while the preview server runs (or substitute your chosen port).
+You can also play the same bundle locally at `http://127.0.0.1:4173/docs/` while the preview server runs (or substitute your chosen port). To check the deployed assets anonymously, set `RSI_URL=https://tandemtales.github.io/RSI/` and run `node tests/deployment-check.mjs`; it compares live file SHA256 hashes with `docs/`. The optional browser smoke suite accepts the same `RSI_URL` and an `RSI_EVIDENCE_DIR` output folder.
 
 ## Prototype boundaries
 
